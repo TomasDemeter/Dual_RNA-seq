@@ -37,12 +37,12 @@ The Snakemake pipeline performs the following steps:
 
 ### Running on the SIT Cluster using Slurm
 ```bash
-snakemake -s Snakefile.py --workflow-profile ./profiles/dual_seq_pipeline/ -n
+snakemake -s workflow/Snakefile.py --workflow-profile ./profiles/dual_seq_pipeline/ -n
 ```
 
 ### Running Locally
 ```bash
-snakemake -s Snakefile.py --profile profiles/default -n
+snakemake -s workflow/Snakefile.py --profile profiles/default -n
 ```
 Note: Remove the `-n` flag after verifying the dry run.
 
