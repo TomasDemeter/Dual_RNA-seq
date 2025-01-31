@@ -27,7 +27,7 @@ The Snakemake pipeline performs the following steps:
    - sample_id
    - genome_id
    - **ONE** sample and **ONE** genome per row!!! If you want to map a sample to multiple genomes, create multiple rows with the same sample and different genomes. The order of the rows doesnt matter.
-3. Configure the `config.yaml` file in the `config` directory with appropriate parameters for your experiment.
+4. Configure the `config.yaml` file in the `config` directory with appropriate parameters for your experiment.
    - suffix of your raw reads
    - the pattern that distinguises forward and reverse reads
    - parameters for individual tools 
@@ -179,7 +179,7 @@ sample2,genome3
 |    └── envs/
 │       ├── fastp_bowtie2.yml
 │       ├── featurecounts_env.yml
-│       ├── fsnakemake.yml
+│       ├── snakemake.yml
 │       └── multiqc_env.yml 
 └── profiles/
     ├── dual_seq_pipeline/

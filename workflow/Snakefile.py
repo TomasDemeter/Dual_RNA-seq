@@ -8,11 +8,11 @@
 # to run the pipeline use one of these commands #
 #################################################
 # use this to run on the cluster
-# snakemake -s Snakefile.py --workflow-profile ./profiles/dual_seq_pipeline/ -n
+# snakemake -s workflow/Snakefile.py --workflow-profile ./profiles/dual_seq_pipeline/ -n
 
 # use this to run locally on the laptop
 # default resources are based on the withe lab notebook. If you run it on your own machine adjust the resources as needed
-# snakemake -s Snakefile.py --profile profiles/default -n 
+# snakemake -s workflow/Snakefile.py --profile profiles/default -n 
 
 ####################
 # Python pacakages #
@@ -34,7 +34,7 @@ LOG_DIR = config["log_dir"]
 ##########################
 # Read sample information
 samples_df = pd.read_csv(config["metadata"], header=0)
-samples_df.columns = samples_df.columns.str.strip()
+samples_df.columns = samples_df.columns.str.strip().str.lower()
 
 # Get unique samples and genomes
 SAMPLES = samples_df['sample_id'].unique().tolist()

@@ -6,7 +6,7 @@ metadata: "../inputs/metadata/metadata.csv"             # csv file with metadata
 
 # these are not necessary to change
 adapters: ../inputs/adapters/adapters.fa                # file with adapters in fasta format
-log_dir:  ../results/logs/                                          # logs for debugging will be saved here
+log_dir:  ../results/logs/                              # logs for debugging will be saved here
 
 #################
 # file suffixes #
