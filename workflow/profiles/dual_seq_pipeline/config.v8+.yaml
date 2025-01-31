@@ -1,0 +1,94 @@
+executor: slurm
+
+default-resources:
+  mem_mb: 10240
+  runtime: 30
+  cpus_per_task: 1
+  slurm_partition: "standard"
+  slurm_account: "kouyos.virology.uzh"
+  output: "logs/{rule}/{jobid}.out"
+  error: "logs/{rule}/{jobid}.err"
+  slurm_extra: "'--qos=long --mail-type=BEGIN,END,FAIL --mail-user=tomas.demeter@uzh.ch'"
+
+jobs: 50
+printshellcmds: True
+rerun-incomplete: True
+keep-going: True
+keep-incomplete: False
+restart-times: 3
+use-conda: True
+conda-frontend: mamba
+
+set-resources:
+
+#########
+# Fastp # 
+#########
+  fastp:
+    cpus_per_task: 32
+    mem_mb: 20000 * attempt
+    runtime: 60 * attempt
+
+##########
+# hisat2 #
+##########
+  hisat2_index_H_sapiens:
+    cpus_per_task: 32
+    mem_mb: 150000 * attempt
+    runtime: 120 * attempt
+
+  hisat2_H_sapiens:
+    cpus_per_task: 32
+    mem_mb: 40000 * attempt
+    runtime: 120 * attempt
+
+###########
+# Bowtie2 # 
+###########
+  bowtie2_index_single: 
+    cpus_per_task: 16
+    mem_mb: 10000 * attempt
+    runtime: 120 * attempt
+
+  bowtie2_map_single:
+    cpus_per_task: 32
+    mem_mb: 40000 * attempt
+    runtime: 120 * attempt
+
+
+##########
+# FastQC # 
+##########
+  FastQC:
+    cpus_per_task: 64
+    mem_mb: max((15000 * attempt), (input.size_mb * 3 * attempt))
+    runtime: max((5 * attempt), (input.size_mb // 1024 * attempt ))
+
+
+###########
+# MultiQC # 
+###########
+  multiqc_H_sapiens:
+    cpus_per_task: 1
+    mem_mb: 10000 * attempt
+    runtime: 5 * attempt
+
+
+  multiqc:
+    cpus_per_task: 1
+    mem_mb: 10000 * attempt
+    runtime: 5 * attempt
+
+
+##################
+## FeatureCounts # 
+##################
+  featureCounts_H_sapiens:
+    cpus_per_task: 16
+    mem_mb: 20000 * attempt
+    runtime: 60 * attempt
+
+  featureCounts_other_genomes:
+    cpus_per_task: 8
+    mem_mb: 10000 * attempt
+    runtime: 30 * attempt

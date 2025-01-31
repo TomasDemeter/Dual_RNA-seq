@@ -1,0 +1,51 @@
+# directories with your files
+result_dir:  ../results/                                # this is where your results will be saved, all subdirectories will be generated automatically
+raw_reads_dir: ../inputs/raw_reads                      # this is where you put your raw_reads and genomes
+genomes_dir: "../inputs/genomes/"                       # save direcotries with genomes here
+metadata: "../inputs/metadata/metadata.csv"             # csv file with metadata
+
+# these are not necessary to change
+adapters: ../inputs/adapters/adapters.fa                # file with adapters in fasta format
+log_dir:  ../results/logs/                                          # logs for debugging will be saved here
+
+#################
+# file suffixes #
+#################
+suffix: ".fastq.gz"                                     # possibilities .fastq, .fastq.gz, .fq, .fq.gz ...
+pattern_FWD_read: "_1"                                  # possibilities _1, _r1, .1, .r1, _read1, .read1, fwd...
+pattern_REV_read: "_2"                                  # possibilities _2, _r2, .2, .r2, _read2, .read2, rev...
+
+#####################
+# PIPELINE SETTINGS #
+#####################
+
+##########
+# hisat2 #
+#########
+H_sapiens_index_fastq: "../inputs/genomes/Homo_sapiens.GRCh38.dna.primary_assembly/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz"
+H_sapiens_index_gtf: "../inputs/genomes/Homo_sapiens.GRCh38.dna.primary_assembly/Homo_sapiens.GRCh38.113.gtf.gz"
+H_sapiens_index: "../inputs/genomes/Homo_sapiens.GRCh38.dna.primary_assembly/hisat2_indices/"
+
+
+##################
+# fastp settings #
+################## 
+fastp:
+  poly_x_min_len: 10                                    # This will trim poly A/T/G/C sequences
+  cut_window_size: 3                                    # Smaller window for more precise trimming
+  cut_mean_quality: 20                                  # Quality threshold
+  length_required: 20                                   # Lower minimum length to capture sRNAs
+  max_length: 500                                       # Maximum length for bacterial sRNAs
+  phread_quality: 20                                    # Base quality threshold
+  correction: True                                      # Enable base correction in overlapped regions
+  overrepresentation: True                              # Enable overrepresented sequence analysis
+  dup_calc: True                                        # Calculate duplication rate (important for sRNA)
+
+##########################
+# featureCounts settings #
+##########################
+featureCounts:
+  strand: "0"                                           # 0=unstranded, 1=stranded, 2=reversely stranded
+  paired_end: "-p"                                      # -p for paired-end read
+  features: "-t gene"                                   # count at gene level
+  attribute: "-g gene_id"                               # use gene_id attribute
