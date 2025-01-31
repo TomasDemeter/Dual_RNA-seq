@@ -8,11 +8,11 @@
 # to run the pipeline use one of these commands #
 #################################################
 # use this to run on the cluster
-# snakemake -s workflow/Snakefile.py --workflow-profile ./profiles/dual_seq_pipeline/ -n
+# snakemake -s Snakefile.py --workflow-profile ./profiles/bact_RNA-seq/ -n
 
 # use this to run locally on the laptop
 # default resources are based on the withe lab notebook. If you run it on your own machine adjust the resources as needed
-# snakemake -s workflow/Snakefile.py --profile profiles/default -n 
+# snakemake -s Snakefile.py --profile ./profiles/default -n 
 
 ####################
 # Python pacakages #
