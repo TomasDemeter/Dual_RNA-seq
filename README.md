@@ -8,7 +8,7 @@ The Snakemake pipeline performs the following steps:
 1. Quality control and trimming of raw reads (fastp)
 2. Quality assessment of sequencing data (FastQC)
 3. Alignment to human genome (HISAT2)
-4. Alignment to bacterial genomes (Bowtie2)
+4. Alignment to bacterial genomes (HISAT2)
 5. Read counting (featureCounts)
 6. Quality control report generation (MultiQC)
 
@@ -61,7 +61,7 @@ The pipeline generates the following outputs:
 
 2. **Alignment Results**
    - Human genome alignments (HISAT2)
-   - Bacterial genome alignments (Bowtie2)
+   - Bacterial genome alignments (hisat2)
 
 3. **Quantification**
    - Feature counts for human genes
@@ -113,7 +113,7 @@ sample2,genome3
 │           ├── sample1.fastq
 │           └── sample2.fastq
 ├── results/
-│   └── bowtie2/
+│   └── hisat2/
 │       └── genome1_folder/
 │           ├── sample1.bam
 │           ├── sample1.bai
@@ -155,8 +155,8 @@ sample2,genome3
 │           ├── sample3.1
 │           └── sample3.2
 │   └── logs/
-│       ├── bowtie2/
-│       ├── bowtie2_index/
+│       ├── hisat2/
+│       ├── hisat2_index/
 │       ├── fastp/
 │       ├── FastQC/
 │       ├── hisat2/
@@ -176,12 +176,12 @@ sample2,genome3
 │   └── rules/
 │       ├── fastp.smk
 │       ├── hisat2.smk
-│       ├── bowtie2.smk
+│       ├── hisat2.smk
 │       ├── fastqc.smk
 │       ├── featuecounts.smk
 │       └── multiqc.smk
 |    └── envs/
-│       ├── fastp_bowtie2.yml
+│       ├── fastp_hisat2.yml
 │       ├── featurecounts_env.yml
 │       ├── snakemake.yml
 │       └── multiqc_env.yml 

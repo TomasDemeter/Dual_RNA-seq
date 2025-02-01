@@ -1,7 +1,7 @@
 rule featureCounts_single:
     input:
-        bowtie_flag = rules.map_all_samples.output.flag,
-        bam         = os.path.join(RESULT_DIR, "bowtie2/{genome}/{sample}.bam")
+        hisat_flag  = rules.map_all_samples.output.flag,
+        bam         = rules.hisat2_map_single.output.bam
     output:
         counts      = os.path.join(RESULT_DIR, "featureCounts/{genome}/{sample}_{genome}_counts.txt")
     log:

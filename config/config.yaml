@@ -19,8 +19,8 @@ pattern_REV_read: "_2"                                  # possibilities _2, _r2,
 # PIPELINE SETTINGS #
 #####################
 
-##########
-# hisat2 #
+#########
+# human #
 #########
 H_sapiens_index_fastq: "../inputs/genomes/Homo_sapiens.GRCh38.dna.primary_assembly/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz"
 H_sapiens_index_gtf: "../inputs/genomes/Homo_sapiens.GRCh38.dna.primary_assembly/Homo_sapiens.GRCh38.113.gtf.gz"
@@ -40,6 +40,20 @@ fastp:
   correction: True                                      # Enable base correction in overlapped regions
   overrepresentation: True                              # Enable overrepresented sequence analysis
   dup_calc: True                                        # Calculate duplication rate (important for sRNA)
+
+##########
+# hisat2 #
+#########
+hisat2:
+    no_spliced_alignment: true                          # Disable spliced alignment to increase speed and accuracy for prokaryotic genomes
+    phred33: true                                       # FASTQ quality scores are encoded using Phred+33
+    max_alignments: 2                                   # Report up to this many valid alignments per read
+    mismatch_penalty: "2,1"                             # Sets mismatch penalty (MX,MN). MX: positions 0-2, MN: positions >2
+    score_min: "L,0,-0.4"                               # Minimum alignment score: L,<constant>,<coefficient>. Threshold = constant + (coefficient * read length)
+    read_gap: "5,3"                                     # Read gap penalties: <open>,<extend>. Cost = open + (length * extend)
+    ref_gap: "5,3"                                      # Reference gap penalties: <open>,<extend>. Cost = open + (length * extend)
+    dta: true                                           # Report alignments tailored for downstream transcript assemblers
+    new_summary: true                                   # Print alignment summary in a more detailed way
 
 ##########################
 # featureCounts settings #

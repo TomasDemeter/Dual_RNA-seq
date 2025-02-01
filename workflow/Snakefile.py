@@ -8,7 +8,7 @@
 # to run the pipeline use one of these commands #
 #################################################
 # use this to run on the cluster
-# snakemake -s Snakefile.py --workflow-profile ./profiles/bact_RNA-seq/ -n
+# snakemake -s Snakefile.py --workflow-profile ./profiles/dual_seq_pipeline/ -n
 
 # use this to run locally on the laptop
 # default resources are based on the withe lab notebook. If you run it on your own machine adjust the resources as needed
@@ -44,8 +44,8 @@ GENOMES = samples_df['genome_id'].unique().tolist()
 # rules #
 #########
 include: "rules/fastp.smk"
+include: "rules/hisat2_human.smk"
 include: "rules/hisat2.smk"
-include: "rules/bowtie2.smk"
 include: "rules/fastqc.smk"
 include: "rules/featuecounts.smk"
 include: "rules/multiqc.smk"
@@ -55,8 +55,8 @@ include: "rules/save_config.smk"
 # Desired outputs #
 ###################
 fastp                   = expand(rules.fastp.output.trimmed_1, sample = SAMPLES)
-hisat2                  = expand(rules.hisat2_H_sapiens.output.unmapped_1, sample = SAMPLES)
-bowtie2_map_single      = expand(rules.bowtie2_map_single.output.flag, sample = SAMPLES, genome = GENOMES)
+hisat2_human            = expand(rules.hisat2_H_sapiens.output.unmapped_1, sample = SAMPLES)
+hisat2_map_single       = expand(rules.hisat2_map_single.output.flag, sample = SAMPLES, genome = GENOMES)
 featureCounts_single    = expand(rules.featureCounts_single.output.counts, sample = SAMPLES, genome = GENOMES)
 featureCounts_all       = expand(rules.featureCounts_all.output.flag, sample = SAMPLES)
 featureCounts_H_sapiens = expand(rules.featureCounts_H_sapiens.output.counts, sample = SAMPLES)
@@ -67,7 +67,8 @@ save_config             = rules.save_config.output
 rule all:
     input:
         fastp,
-        bowtie2_map_single,
+        hisat2_human,
+        hisat2_map_single,
         featureCounts_single,
         featureCounts_all,
         featureCounts_H_sapiens,

@@ -1,13 +1,13 @@
 rule multiqc:
     input:
-        bowtie              = rules.map_all_samples.output.flag,
+        hisat               = rules.map_all_samples.output.flag,
         fastqc_input_1      = expand(rules.FastQC.output.zip_file_1, sample = SAMPLES),
         fastqc_input_2      = expand(rules.FastQC.output.zip_file_2, sample = SAMPLES),
         featurecounts       = expand(rules.featureCounts_single.output.counts, sample = SAMPLES, genome = GENOMES)
     output:
         output              = os.path.join(RESULT_DIR, "MultiQC/{genome}/{genome}_multiqc_report.html")
     params:
-        bowtie_logs         = os.path.join(LOG_DIR, "bowtie2/{genome}"),
+        hisat_logs         = os.path.join(LOG_DIR, "hisat2/bacteria/{genome}"),
         fastqc_zip          = os.path.join(RESULT_DIR, "FastQC/"),
         featurecounts_dir   = os.path.join(RESULT_DIR,"featureCounts/{genome}")
     log:
@@ -22,7 +22,7 @@ rule multiqc:
         multiqc \
             --force \
             --outdir $(dirname {output.output}) \
-            {params.bowtie_logs} \
+            {params.hisat_logs} \
             {params.fastqc_zip} \
             {params.featurecounts_dir} \
             2>&1 && \
